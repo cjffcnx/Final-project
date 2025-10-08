@@ -3,10 +3,16 @@ const dotenv=require('dotenv');
 const colors=require('colors');
 const morgan=require('morgan');
 const cors=require('cors');
+const connectDB = require('./config/db');
 
 
 // dot env config
 dotenv.config();
+
+// Make sure to configure after dotenv 
+// MongoDB connection
+connectDB();
+
 //rest object express ko sabai functionality app ma store xa
 const app=express();
 
@@ -21,14 +27,10 @@ app.use(morgan('dev'));
 app.use('/api/v1/test',require('./routes/testRoute'))
 //get takes path and callback function, callback has request response and middleware
 
-app.get('/',(req,res)=>{
-res.status(200).json({
-message:"Hello from the homepage of Blood Bank App"
-})
-})
+
 
 const PORT=process.env.PORT || 8080;
 
 app.listen(PORT,(req,res)=>{
-    console.log(`server is running at port ${PORT}`);   
+    console.log(`server is running in ${process.env.DEV_MODE}  at port ${process.env.PORT}` .bgBlue.white);   
 })
