@@ -27,6 +27,7 @@ app.use(morgan('dev'));
 app.use('/api/v1/test',require('./routes/testRoute'))
 //get takes path and callback function, callback has request response and middleware
 
+app.use('/api/v1/auth',require('./routes/authRoute'))
 
 
 const PORT=process.env.PORT || 8080;
