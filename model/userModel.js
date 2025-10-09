@@ -17,6 +17,25 @@ required:function(){
     return false
 }
     },
+    organizationName:{
+type:String,
+required:function(){
+    if(this.role=='organization'){
+        return true
+    }
+    return false
+}
+    },
+
+    hospitalName:{
+        type:String,
+        required:function(){
+            if(this.role=='hospital'){
+                return true
+            }
+            return false
+        }
+    },
     email:{
         type:String,
         require:[true,'Email is required'],
@@ -38,4 +57,6 @@ required:function(){
         type:String,
         require:[true, "Phone number is required"]
     }
-})
+},{timestamps:true})
+
+module.exports=mongoose.model('users',userSchema)
