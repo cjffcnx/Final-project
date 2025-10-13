@@ -10,7 +10,7 @@ const Register = () => {
         </div>
 
         <div className='col-md-4 form-container'>
-          <Form formTitle={'Register Page'} submitBtn={'Register'} />
+          <Form formTitle={'Register Page'} submitBtn={'Register'} formType={'register'} />
         </div>
       </div>
     </>
