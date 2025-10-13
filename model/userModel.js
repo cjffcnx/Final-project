@@ -17,10 +17,10 @@ const userSchema = new mongoose.Schema({
             return false
         }
     },
-    organizationName: {
+    organisationName: {
         type: String,
         required: function () {
-            if (this.role == 'organization') {
+            if (this.role == 'organisation') {
                 return true
             }
             return false

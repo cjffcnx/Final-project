@@ -1,4 +1,5 @@
 import React from 'react'
+import Form from '../../components/shared/Form'
 
 
 const Login = () => {
@@ -12,8 +13,8 @@ const Login = () => {
 
                 <div className="col-md-4 form-container">
                     <div className="login-form">
-                        <h2>Login</h2>
-                    
+                        <h2><Form formTitle={'Login Page'} submitBtn={'Login'} /></h2>
+
                     </div>
                 </div>
             </div>
