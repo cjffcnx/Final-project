@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import InputType from './InputType'
-
+import {Link} from 'react-router-dom'
 const Form = ({ formType, submitBtn, formTitle }) => {
 
   const [email, setEmail] = useState('');
@@ -182,7 +182,18 @@ const Form = ({ formType, submitBtn, formTitle }) => {
               return null;
           }
         })()}
-        <div className="d-flex">
+        <div className="d-flex flex-row justify-content-between">
+{/* Check the form type and then conditionally render based on that*/}
+
+{formType==='login'? (
+  <p> Not Registered Yet? Register
+<Link to={'/register'}> Here</Link>
+  </p>
+):(
+    <p> Already a user? Please 
+<Link to={'/login'}> Login</Link>
+  </p>
+)}
           <button type='submit' className="btn btn-primary">
             {submitBtn}
           </button>
