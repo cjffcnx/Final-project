@@ -1,22 +1,32 @@
-export const handleLogin = (e,email,password,role) => {
+import store from '../redux/store';
+import { userLogin } from '../redux/features/auth/authActions';
 
+export const handleLogin = (e, email, password, role) => {
     e.preventDefault();
-    try{
-        if(!role || !email || !password){
+    try {
+        if (!role || !email || !password) {
             return alert('Please provide all fields')
         }
-console.log('login',e,email,password,role);
-    }catch(error){
+        console.log('Login attempt:', { email, password, role });
+        store.dispatch(userLogin({ email, password, role }))
+            .then((result) => {
+                console.log('Login result:', result);
+            })
+            .catch((error) => {
+                console.log('Login error:', error);
+            });
+
+    } catch (error) {
         console.log("Error during login:", error);
     }
- }
+}
 
-export const handleRegister = (e,name,role,organisationName,hospitalName,email,password,website,address,phone) => {
+export const handleRegister = (e, name, role, organisationName, hospitalName, email, password, website, address, phone) => {
 
     e.preventDefault();
-    try{
-        console.log('register',e,name,role,organisationName,hospitalName,email,password,website,address,phone);
-    }catch(error){
+    try {
+        console.log('register', e, name, role, organisationName, hospitalName, email, password, website, address, phone);
+    } catch (error) {
         console.log("Error during registration:", error);
     }
 }
