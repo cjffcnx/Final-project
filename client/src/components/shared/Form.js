@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import InputType from './InputType'
 import {Link} from 'react-router-dom'
+import { handleLogin, handleRegister } from '../../services/AuthService';
 const Form = ({ formType, submitBtn, formTitle }) => {
 
   const [email, setEmail] = useState('');
@@ -21,7 +22,15 @@ const Form = ({ formType, submitBtn, formTitle }) => {
       <h1 className='text-center'>{formTitle}</h1>
       <hr />
 
-      <form>
+      <form onSubmit={(e)=>{
+if(formType==='login')
+  // handle login
+return handleLogin(e,email,password, role)
+
+else if(formType==='register')
+return handleRegister(e,name,role,organisationName,hospitalName,email,password,website,address,phone)
+
+      }}>
         {/* Switch statement */}
         {(() => {
           switch (formType) {
