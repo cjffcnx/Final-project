@@ -23,4 +23,32 @@ export const userLogin = createAsyncThunk(
             }
         }
     }
+);
+
+//Register
+export const userRegister=createAsyncThunk(
+'auth/register',
+ 
+async({name,role,organisationName,hospitalName,email,password,website,address,phone},{rejectWithValue})=>{
+try {
+    
+const {data}=await API.post('/auth/register',{name,role,organisationName,hospitalName,email,password,website,address,phone})
+if(data.success){
+    toast.success(data.message)
+    window.location.replace('/login');
+}
+
+} catch (error) {
+    console.log(error);
+     if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message)
+            }
+            else {
+                return rejectWithValue(error.message)
+            }
+}
+
+}
+
+
 )
