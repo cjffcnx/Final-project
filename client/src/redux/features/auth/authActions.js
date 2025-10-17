@@ -27,51 +27,51 @@ export const userLogin = createAsyncThunk(
 );
 
 //Register
-export const userRegister=createAsyncThunk(
-'auth/register',
- 
-async({name,role,organisationName,hospitalName,email,password,website,address,phone},{rejectWithValue})=>{
-try {
-    
-const {data}=await API.post('/auth/register',{name,role,organisationName,hospitalName,email,password,website,address,phone})
-if(data.success){
-    toast.success(data.message)
-    window.location.replace('/login');
-}
+export const userRegister = createAsyncThunk(
+    'auth/register',
 
-} catch (error) {
-    console.log(error);
-     if (error.response && error.response.data.message) {
+    async ({ name, role, organisationName, hospitalName, email, password, website, address, phone }, { rejectWithValue }) => {
+        try {
+
+            const { data } = await API.post('/auth/register', { name, role, organisationName, hospitalName, email, password, website, address, phone })
+            if (data.success) {
+                toast.success(data.message)
+                window.location.replace('/login');
+            }
+
+        } catch (error) {
+            console.log(error);
+            if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message)
             }
             else {
                 return rejectWithValue(error.message)
             }
-}
+        }
 
-}
+    }
 
 
 )
 
 //Current user
 
-export const getCurrentUser =createAsyncThunk(
-'auth/getcurrent-user',
-async(rejectWithValue)=>{
-try {
-  const res=await API.get('/auth/current-user')
-  if(res?.data){
-    return res?.data;
-  }
-} catch (error) {
-       console.log(error);
-     if (error.response && error.response.data.message) {
+export const getCurrentUser = createAsyncThunk(
+    'auth/getcurrent-user',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await API.get('/auth/current-user')
+            if (res?.data) {
+                return res?.data;
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message)
             }
             else {
                 return rejectWithValue(error.message)
             }
-}
-}
+        }
+    }
 )

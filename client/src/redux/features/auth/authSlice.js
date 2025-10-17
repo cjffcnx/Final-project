@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getCurrentUser, userLogin, userRegister } from './authActions';
 
-const token=localStorage.getItem('token') ? localStorage.getItem('token') : null;
+const token = localStorage.getItem('token') ? localStorage.getItem('token') : null;
 
 const initialState = {
     loading: false,
@@ -15,13 +15,13 @@ const authSlice = createSlice({
     initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
-//login
-builder.addCase(userLogin.pending, (state) => {
+        //login
+        builder.addCase(userLogin.pending, (state) => {
             state.loading = true;
             state.error = null;
         })
 
-        builder.addCase(userLogin.fulfilled, (state, payload) => {
+        builder.addCase(userLogin.fulfilled, (state, { payload }) => {
             state.loading = false;
             state.user = payload.user;
             state.token = payload.token;
@@ -34,16 +34,16 @@ builder.addCase(userLogin.pending, (state) => {
             state.error = payload;
 
         })
-// Register user
+        // Register user
         builder.addCase(userRegister.pending, (state) => {
             state.loading = true;
             state.error = null;
         })
 
-        builder.addCase(userRegister.fulfilled, (state, payload) => {
+        builder.addCase(userRegister.fulfilled, (state, { payload }) => {
             state.loading = false;
             state.user = payload.user;
-          
+
 
 
         })
@@ -54,16 +54,16 @@ builder.addCase(userLogin.pending, (state) => {
 
         })
 
-// Current user
-         builder.addCase(getCurrentUser.pending, (state) => {
+        // Current user
+        builder.addCase(getCurrentUser.pending, (state) => {
             state.loading = true;
             state.error = null;
         })
 
-        builder.addCase(getCurrentUser.fulfilled, (state, payload) => {
+        builder.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
             state.loading = false;
             state.user = payload.user;
-          
+
 
 
         })
