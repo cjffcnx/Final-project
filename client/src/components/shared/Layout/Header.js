@@ -23,9 +23,9 @@ const Header = () => {
           <div className='navbar-brand'><BiSolidDonateBlood color='red' />Blood Axis</div>
           <ul className='navbar-nav flex-row'>
             <li className='nav-item mx-3'>
-              <p className='nav-link'><FaUserCircle color='green' /> WELCOME {user?.name || user?.organizationName || user?.hospitalName || 'Guest'}
-              &nbsp;
-              <span className='badge bg-secondary'>{user?.role || 'Guest'}</span>
+              <p  className='nav-link'><FaUserCircle color='green' /> WELCOME {user?.name || user?.organizationName || user?.hospitalName || 'Guest'}
+                &nbsp;
+                <span className='badge bg-secondary'>{user?.role || 'Guest'}</span>
               </p>
             </li>
             <li className='nav-item mx-3'>
