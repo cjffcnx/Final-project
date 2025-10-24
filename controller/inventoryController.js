@@ -4,22 +4,7 @@ const userModel = require("../model/userModel");
 const createInventoryController = async (req, res) => {
 
     try {
-        const { email, inventoryType } = req.body
-
-        // Validation of we receive the user or not
-        const user = await userModel.findOne({ email });
-
-        if (!user) {
-            throw new Error("User not found");
-        }
-
-        // if (inventoryType === 'in' && user.role !== 'donar') {
-        //     throw new Error("Not a donar account");
-        // }
-
-        if (inventoryType === 'out' && user.role !== 'hospital') {
-            throw new Error("Not a receiver account");
-        }
+        const { email, inventoryType } = req.body;
 
         // Get the current logged-in user (organisation)
         const currentUser = await userModel.findById(req.userId);
@@ -35,11 +20,21 @@ const createInventoryController = async (req, res) => {
             organisation: req.userId, // Current logged-in organization
         };
 
-        // Set donar or hospital based on inventory type
-        if (inventoryType === 'in') {
-            inventoryData.donar = user._id;
-        } else if (inventoryType === 'out') {
-            inventoryData.hospital = user._id;
+        // Save donor/hospital email if provided (allow 'NA' or empty)
+        if (email && email !== 'NA') {
+            inventoryData.donarEmail = email;
+            // Try to find the user but do not fail if not found
+            const user = await userModel.findOne({ email });
+            if (user) {
+                // if inventory type is 'in' expect a donor account
+                if (inventoryType === 'in' && user.role === 'donar') {
+                    inventoryData.donar = user._id;
+                }
+                // if inventory type is 'out' expect a hospital account
+                else if (inventoryType === 'out' && user.role === 'hospital') {
+                    inventoryData.hospital = user._id;
+                }
+            }
         }
 
         const inventory = new inventoryModel(inventoryData);
@@ -49,7 +44,7 @@ const createInventoryController = async (req, res) => {
             success: true,
             message: "New Blood Record Added",
             inventory
-        })
+        });
 
     } catch (error) {
         console.log(error);
