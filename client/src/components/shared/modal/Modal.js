@@ -1,10 +1,29 @@
 import React, { useState } from 'react'
 import InputType from '../InputType';
+import API from '../../../services/API';
+
 const Modal = () => {
   const [inventoryType, setInventoryType] = useState('in');
   const [bloodGroup, setBloodGroup] = useState('');
   const [quantity, setQuantity] = useState(0);
   const [donarEmail, setDonarEmail] = useState('');
+
+  //Hande modal data
+  const handleModalSubmit=async()=>{
+    try {
+      if(!bloodGroup || !quantity){
+        return alert("Please fill all the fields");
+      }
+      const {data}=await API.post('/inventory/create-inventory',{
+        inventoryType,
+        bloodGroup,
+        quantity,
+        donarEmail
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    };
   return (
     <>
       {/* Modal */}
@@ -26,6 +45,7 @@ const Modal = () => {
                     defaultChecked
                     value={'in'}
                     onChange={(e) => setInventoryType(e.target.value)}
+                    className='form-check-input'
                   />
                   <label htmlFor='in' className='form-check-label'>In</label>
                 </div>
@@ -37,6 +57,7 @@ const Modal = () => {
 
                     value={'out'}
                     onChange={(e) => setInventoryType(e.target.value)}
+                    className='form-check-input'
                   />
                   <label htmlFor='out' className='form-check-label'>Out</label>
                 </div>
@@ -73,7 +94,7 @@ value={quantity}
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Submit</button>
+              <button type="button" className="btn btn-primary" onClick={handleModalSubmit}>Submit</button>
             </div>
 
        

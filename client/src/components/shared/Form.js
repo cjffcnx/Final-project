@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import InputType from './InputType'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { handleLogin, handleRegister } from '../../services/AuthService';
 const Form = ({ formType, submitBtn, formTitle }) => {
 
@@ -22,13 +22,13 @@ const Form = ({ formType, submitBtn, formTitle }) => {
       <h1 className='text-center'>{formTitle}</h1>
       <hr />
 
-      <form onSubmit={(e)=>{
-if(formType==='login')
-  // handle login
-return handleLogin(e,email,password, role)
+      <form onSubmit={(e) => {
+        if (formType === 'login')
+          // handle login
+          return handleLogin(e, email, password, role)
 
-else if(formType==='register')
-return handleRegister(e,name,role,organisationName,hospitalName,email,password,website,address,phone)
+        else if (formType === 'register')
+          return handleRegister(e, name, role, organisationName, hospitalName, email, password, website, address, phone)
 
       }}>
         {/* Switch statement */}
@@ -37,6 +37,64 @@ return handleRegister(e,name,role,organisationName,hospitalName,email,password,w
             case 'login':
               return (
                 <>
+                  <div className="role-selection mb-3">
+                    <p className="role-title">Login As: <strong>{role}</strong></p>
+                    <div className="d-flex mb-3">
+                      <div className="form-check ms-2">
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="role"
+                          id="donarRadioLogin"
+                          value="donar"
+                          onChange={(e) => setRole(e.target.value)}
+                          defaultChecked
+                        />
+                        <label htmlFor="donarRadioLogin" className="form-check-label">
+                          Donor
+                        </label>
+                      </div>
+                      <div className="form-check ms-2">
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="role"
+                          id="adminRadioLogin"
+                          value="admin"
+                          onChange={(e) => setRole(e.target.value)}
+                        />
+                        <label htmlFor="adminRadioLogin" className="form-check-label">
+                          Admin
+                        </label>
+                      </div>
+                      <div className="form-check ms-2">
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="role"
+                          id="hospitalRadioLogin"
+                          value="hospital"
+                          onChange={(e) => setRole(e.target.value)}
+                        />
+                        <label htmlFor="hospitalRadioLogin" className="form-check-label">
+                          Hospital
+                        </label>
+                      </div>
+                      <div className="form-check ms-2">
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          name="role"
+                          id="organisationRadioLogin"
+                          value="organisation"
+                          onChange={(e) => setRole(e.target.value)}
+                        />
+                        <label htmlFor="organisationRadioLogin" className="form-check-label">
+                          Organisation
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                   <InputType labelText={'Email'}
                     labelFor={'forEmail'}
                     inputType={'email'}
@@ -115,7 +173,7 @@ return handleRegister(e,name,role,organisationName,hospitalName,email,password,w
                       </div>
                     </div>
                   </div>
-   {(role === 'admin' || role === 'donar') && (
+                  {(role === 'admin' || role === 'donar') && (
                     <InputType labelText={'Name'}
                       labelFor={'forName'}
                       inputType={'text'}
@@ -159,7 +217,7 @@ return handleRegister(e,name,role,organisationName,hospitalName,email,password,w
                     onChange={(e) => setPassword(e.target.value)}
                   />
 
-               
+
 
                   <InputType labelText={'Website'}
                     labelFor={'forWebsite'}
@@ -192,17 +250,17 @@ return handleRegister(e,name,role,organisationName,hospitalName,email,password,w
           }
         })()}
         <div className="d-flex flex-row justify-content-between">
-{/* Check the form type and then conditionally render based on that*/}
+          {/* Check the form type and then conditionally render based on that*/}
 
-{formType==='login'? (
-  <p> Not Registered Yet? Register
-<Link to={'/register'}> Here</Link>
-  </p>
-):(
-    <p> Already a user? Please 
-<Link to={'/login'}> Login</Link>
-  </p>
-)}
+          {formType === 'login' ? (
+            <p> Not Registered Yet? Register
+              <Link to={'/register'}> Here</Link>
+            </p>
+          ) : (
+            <p> Already a user? Please
+              <Link to={'/login'}> Login</Link>
+            </p>
+          )}
           <button type='submit' className="btn btn-primary">
             {submitBtn}
           </button>
